@@ -30,6 +30,7 @@ import type RawElement from './rawelement';
 import type RootEditableElement from './rooteditableelement';
 import type Selection from './selection';
 import type UIElement from './uielement';
+import { isPlainObject } from 'lodash-es';
 
 // @if CK_DEBUG_ENGINE // const { convertMapToTags } = require( '../dev-utils/utils' );
 
@@ -60,12 +61,12 @@ import type UIElement from './uielement';
  */
 export default class Element extends Node {
 	public name: string;
+	public _unsafeAttributesToRender: string[];
 	private readonly _attrs: Map<string, string>;
 	private readonly _children: Node[];
 	private readonly _classes: Set<string>;
 	private readonly _styles: StylesMap;
 	private readonly _customProperties: Map<string | symbol, unknown>;
-	private readonly _unsafeAttributesToRender: string[];
 
 	/**
 	 * Creates a view element.
@@ -783,7 +784,7 @@ export default class Element extends Node {
 	 * @returns {Boolean} Returns true if an attribute existed and has been removed.
 	 * @fires module:engine/view/node~Node#change
 	 */
-	private _removeAttribute( key: string ): boolean {
+	public _removeAttribute( key: string ): boolean {
 		this._fireChange( 'attributes', this );
 
 		// Remove class attribute.
@@ -823,7 +824,7 @@ export default class Element extends Node {
 	 * @param {Array.<String>|String} className
 	 * @fires module:engine/view/node~Node#change
 	 */
-	private _addClass( className: string | string[] ): void {
+	public _addClass( className: string | string[] ): void {
 		this._fireChange( 'attributes', this );
 
 		for ( const name of toArray( className ) ) {
@@ -842,7 +843,7 @@ export default class Element extends Node {
 	 * @param {Array.<String>|String} className
 	 * @fires module:engine/view/node~Node#change
 	 */
-	private _removeClass( className: string | string[] ): void {
+	public _removeClass( className: string | string[] ): void {
 		this._fireChange( 'attributes', this );
 
 		for ( const name of toArray( className ) ) {
@@ -869,10 +870,16 @@ export default class Element extends Node {
 	 * @param {String} [value] Value to set. This parameter is ignored if object is provided as the first parameter.
 	 * @fires module:engine/view/node~Node#change
 	 */
-	private _setStyle( ...args: Parameters<StylesMap[ 'set' ]> ): void {
+	public _setStyle( property: string, value: string ): void;
+	public _setStyle( property: Record<string, string> ): void;
+	public _setStyle( property: string | Record<string, string>, value?: string ): void {
 		this._fireChange( 'attributes', this );
 
-		this._styles.set( ...args );
+		if ( isPlainObject( property ) ) {
+			this._styles.set( property as Record<string, string> );
+		} else {
+			this._styles.set( property as string, value as string );
+		}
 	}
 
 	/**
@@ -890,7 +897,7 @@ export default class Element extends Node {
 	 * @param {Array.<String>|String} property
 	 * @fires module:engine/view/node~Node#change
 	 */
-	private _removeStyle( property: string ): void {
+	public _removeStyle( property: string | string[] ): void {
 		this._fireChange( 'attributes', this );
 
 		for ( const name of toArray( property ) ) {
@@ -919,7 +926,7 @@ export default class Element extends Node {
 	 * @param {String|Symbol} key
 	 * @returns {Boolean} Returns true if property was removed.
 	 */
-	private _removeCustomProperty( key: string ): boolean {
+	public _removeCustomProperty( key: string | symbol ): boolean {
 		return this._customProperties.delete( key );
 	}
 

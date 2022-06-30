@@ -36,8 +36,8 @@ import { default as TreeWalker, type TreeWalkerValue, type TreeWalkerOptions } f
  * * {@link module:engine/view/upcastwriter~UpcastWriter}
  */
 export default class Range {
-	public readonly start: Position;
-	public readonly end: Position;
+	public start: Position;
+	public end: Position;
 
 	/**
 	 * Creates a range spanning from `start` position to `end` position.

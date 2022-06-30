@@ -156,11 +156,11 @@ export default class Text extends Node {
 	 * @protected
 	 * @type {String}
 	 */
-	private get _data(): string {
+	public get _data(): string {
 		return this.data;
 	}
 
-	private set _data( data: string ) {
+	public set _data( data: string ) {
 		this._fireChange( 'text', this );
 
 		this._textData = data;

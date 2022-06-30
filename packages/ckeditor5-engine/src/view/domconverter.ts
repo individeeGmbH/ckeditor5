@@ -9,7 +9,6 @@
 
 /* globals document, Node, NodeFilter, DOMParser, Text */
 
-import type ViewNode from './node';
 import ViewText from './text';
 import ViewElement from './element';
 import ViewUIElement from './uielement';
@@ -18,7 +17,6 @@ import ViewRange from './range';
 import ViewSelection from './selection';
 import ViewDocumentFragment from './documentfragment';
 import ViewTreeWalker from './treewalker';
-import type ViewTextProxy from './textproxy';
 import { default as Matcher, type MatcherPattern } from './matcher';
 import {
 	BR_FILLER, INLINE_FILLER_LENGTH, NBSP_FILLER, MARKED_NBSP_FILLER,
@@ -31,10 +29,13 @@ import indexOf from '@ckeditor/ckeditor5-utils/src/dom/indexof';
 import getAncestors from '@ckeditor/ckeditor5-utils/src/dom/getancestors';
 import isText from '@ckeditor/ckeditor5-utils/src/dom/istext';
 import isComment from '@ckeditor/ckeditor5-utils/src/dom/iscomment';
+
+import type ViewNode from './node';
 import type Document from './document';
 import type DocumentSelection from './documentselection';
 import type EditableElement from './editableelement';
-import type { ViewRawElement } from '..';
+import type ViewTextProxy from './textproxy';
+import type ViewRawElement from './rawelement';
 
 type DomNode = globalThis.Node;
 type DomElement = globalThis.HTMLElement;

@@ -228,7 +228,7 @@ class DocumentFragment {
 	 * @param {module:engine/view/item~Item|Iterable.<module:engine/view/item~Item>} items Items to be inserted.
 	 * @returns {Number} Number of inserted nodes.
 	 */
-	private _insertChild( index: number, items: Item | Iterable<Item> ) {
+	public _insertChild( index: number, items: Item | Iterable<Item> ): number {
 		this._fireChange( 'children', this );
 		let count = 0;
 

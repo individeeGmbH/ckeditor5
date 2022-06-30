@@ -193,8 +193,7 @@ export default class RawElement extends Element {
 	 * @param {HTMLElement} domElement The native DOM element representing the raw view element.
 	 * @param {module:engine/view/domconverter~DomConverter} domConverter Instance of the DomConverter used to optimize the output.
 	 */
-	public render(): void;
-	public render( domElement: DomElement, domConverter: DomConverter ): void;
+	public render( domElement?: DomElement, domConverter?: DomConverter ): void;
 	public render(): void {}
 }
 

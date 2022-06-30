@@ -45,9 +45,9 @@ export default class AttributeElement extends Element {
 	public static DEFAULT_PRIORITY: number;
 
 	public readonly getFillerOffset: () => number | null;
-	private readonly _priority: number;
-	private readonly _id: string | number | null;
-	private readonly _clonesGroup: Set<AttributeElement> | null;
+	public _priority: number;
+	public _id: string | number | null;
+	public _clonesGroup: Set<AttributeElement> | null;
 
 	/**
 	 * Creates an attribute element.
